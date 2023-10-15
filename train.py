@@ -43,8 +43,8 @@ def test(args, genA2B, genB2A, testA_loader, testB_loader, name, step):
         A2B = []
         B2A = []
         for i in range(test_sample_num):
-            real_A = testA_loader.next()
-            real_B = testB_loader.next()
+            real_A = next(testA_loader)
+            real_B = next(testB_loader)
 
             real_A, real_B = real_A.cuda(), real_B.cuda()
 
@@ -283,7 +283,7 @@ def train(args, trainA_loader, trainB_loader, testA_loader, testB_loader, G_A2B,
                     test(args, G_A2B, G_B2A, testA_loader, testB_loader, 'normal', i)
                     test(args, G_A2B_ema, G_B2A_ema, testA_loader, testB_loader, 'ema', i)
 
-            if (i+1) % 2000 == 0:
+            if (i+1) % 500 == 0:
                 torch.save(
                     {
                         'G_A2B': G_A2B_module.state_dict(),
