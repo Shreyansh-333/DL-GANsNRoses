@@ -352,7 +352,9 @@ if __name__ == '__main__':
     G_B2A = Generator( args.size, args.num_down, args.latent_dim, args.n_mlp, lr_mlp=args.lr_mlp, n_res=args.n_res).to(device)
     D_B = Discriminator(args.size).to(device)
     D_L = LatDiscriminator(args.latent_dim).to(device)
-    lpips_fn = lpips.LPIPS(net='vgg').to(device)
+
+    # Changed lpips net from VGG to alex to increase training speed
+    lpips_fn = lpips.LPIPS(net='alex').to(device)
 
     G_A2B_ema = copy.deepcopy(G_A2B).to(device).eval()
     G_B2A_ema = copy.deepcopy(G_B2A).to(device).eval()
